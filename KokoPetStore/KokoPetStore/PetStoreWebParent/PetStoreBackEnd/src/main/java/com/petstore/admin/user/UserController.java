@@ -40,7 +40,7 @@ public class UserController {
 		service.save(user);
 		return "redirect:/users";
 	}
-	//ovo neradi popravi kasnije
+
 	@GetMapping("/users/edit/{id}")
 	public String editUser(@PathVariable(name = "id") Integer id, Model model) {
 		User user = service.get(id);
