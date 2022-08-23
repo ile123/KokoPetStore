@@ -1,0 +1,17 @@
+package com.petstore.common.entity;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "brands")
+public class Brand {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+	
+	@Column(length = 40, nullable = false, unique = true)
+	private String name;
+	
+	@Column(length = 40, nullable = false, unique = true)
+	private String picture;
+}

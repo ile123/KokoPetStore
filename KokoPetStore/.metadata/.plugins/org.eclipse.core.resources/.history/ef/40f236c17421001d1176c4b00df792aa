@@ -1,0 +1,25 @@
+package com.petstore.common.entity;
+
+import java.util.Date;
+
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+public class Product {
+	private Integer Id;
+	private String Name;
+	private String Description;
+	private String Picture;
+	
+	private Date createdTime;
+	private Date updateTime;
+	
+	private boolean inStock;
+	
+	private float price;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
+}

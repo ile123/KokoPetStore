@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Pet Store Amin</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<nav class="navbar nabar-expand-lg bg-dark navbar-dark">
+				<div>
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-item" th:href="@{/users}">Users</a>
+						</li>
+					</ul>
+				</div>
+				</nav>
+			</div>
+		</div>
+	</body>
+</html>

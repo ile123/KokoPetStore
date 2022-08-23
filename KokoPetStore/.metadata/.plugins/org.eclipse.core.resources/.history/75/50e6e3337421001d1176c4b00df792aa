@@ -1,0 +1,10 @@
+package com.petstore.common.entity;
+
+public class Product {
+	private Integer Id;
+	private String Name;
+	private String Description;
+	
+	private Date createdTime;
+	private Date updateTime;
+}

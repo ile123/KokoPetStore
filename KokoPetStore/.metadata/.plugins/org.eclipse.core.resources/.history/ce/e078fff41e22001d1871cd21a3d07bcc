@@ -1,0 +1,28 @@
+package com.petstore.common.entity;
+
+import java.util.Date;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "products")
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+	@Column(length = 40, nullable = false, unique = true)
+	private String name;
+	@Column(length = 150, nullable = false)
+	private String description;
+	@Column(length = 128, nullable = false)
+	private String picture;
+	
+	private Date createdTime;
+	private Date updateTime;
+	
+	private float price;
+	
+	private Category category;
+	
+	private Brand brand;
+}

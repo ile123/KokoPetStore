@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Login Admin</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<img th:src="@{/images/phoenix-bird-logo-11549927145rehvx0kneo_1_30.png}"/>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,5 @@
+package com.petstore.admin.category;
+
+public interface CategoryRepository {
+
+}

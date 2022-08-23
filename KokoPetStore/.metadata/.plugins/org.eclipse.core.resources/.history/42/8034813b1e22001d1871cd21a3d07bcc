@@ -1,0 +1,5 @@
+package com.petstore.common.entity;
+
+public class Product {
+	private Integer Id;
+}

@@ -1,0 +1,104 @@
+package com.petstore.common.entity;
+
+import java.util.Date;
+
+import javax.persistence.*;
+
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+	@Column(length = 256, nullable = false, unique = true)
+	private String Name;
+	@Column(length = 4096, nullable = false, unique = true)
+	private String Description;
+	@Column(length = 64, nullable = false, unique = true)
+	private String brand;
+	@Column(length = 128, nullable = false)
+	private String Picture;
+	@Column(name = "created_time")
+	private Date createdTime;
+	@Column(name = "updated_time")
+	private Date updateTime;
+	@Column(name="in_stock")
+	private boolean inStock;
+	@Column(name="price")
+	private float price;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
+
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+	public String getPicture() {
+		return Picture;
+	}
+
+	public void setPicture(String picture) {
+		Picture = picture;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public boolean isInStock() {
+		return inStock;
+	}
+
+	public void setInStock(boolean inStock) {
+		this.inStock = inStock;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+}

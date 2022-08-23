@@ -1,0 +1,19 @@
+package com.petstore.common.entity;
+
+import java.util.Date;
+
+public class Product {
+	private Integer Id;
+	private String Name;
+	private String Description;
+	private String Picture;
+	
+	private Date createdTime;
+	private Date updateTime;
+	
+	private boolean inStock;
+	
+	private float price;
+	
+	private Category category;
+}

@@ -1,0 +1,55 @@
+package com.petstore.admin.category;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Category;
+import com.petstore.common.entity.User;
+
+@Service
+public class CategoryService {
+	
+	@Autowired
+	private CategoryRepository repo;
+	
+	public static final int CategoriesPerPage = 5;
+	
+	public List<Category> GetAllCategories(){
+		return (List<Category>) repo.findAll();
+	}
+	
+	//neradi popravi kasnije
+		public void update(Category category) {
+			if(!isCategoryNameUnique(category.getName())) {
+				return;
+			}
+			if(category.getId() != null) {
+				Category existingCategory = repo.findById(category.getId()).get();
+				if(!category.getPicture().isEmpty()) {
+					category.setPicture(existingCategory.getPicture());
+				}
+			}
+			repo.save(category);
+		}
+	
+	public void save(Category category) {
+		if(!isCategoryNameUnique(category.getName())) {
+			return;
+		}
+		repo.save(category);
+	}
+	
+	public void delete(Integer id) {
+		if(repo.findById(id).get() == null) {
+			return;
+		}
+		repo.deleteById(id);
+	}
+	
+	public boolean isCategoryNameUnique(String name) {
+		Category categoryByName = repo.getCategoryByName(name);
+		return categoryByName == null;
+	}
+}

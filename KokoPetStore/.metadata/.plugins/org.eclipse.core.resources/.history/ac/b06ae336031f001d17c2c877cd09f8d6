@@ -1,0 +1,9 @@
+package com.petstore.admin.user;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.*;
+
+@Repository
+public interface RoleRepository extends CrudRepository{
+
+}

@@ -1,0 +1,9 @@
+package com.petstore.common.entity;
+
+@Entity
+@Table(name = "categories")
+public class Category {
+	private Integer Id;
+	private String Name;
+	private String Picture;
+}

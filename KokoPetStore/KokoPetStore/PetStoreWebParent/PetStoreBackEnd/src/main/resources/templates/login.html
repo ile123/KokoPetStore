@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Login Admin</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<img th:src="@{/images/kokologo_3_8.png}"/>
+			</div>
+			<form th:action="@{/login}" method="post">
+			<div th:if="${param.error}">
+				<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+			</div>
+			<div th:if="${param.logout}">
+				<p class="text-warning">You have been logged out!</p>
+			</div>
+				<p>Login Page For PetStore Control Panel</p>
+				<p>
+					<input type="email" name="email" placeholder="Email...." class="form-control" required/>
+				</p>
+				<p>
+					<input type="password" name="password" placeholder="Password...." class="form-control" required/>
+				</p>
+				<p>
+					<input type="submit" value="Login" class="btn btn-primary" />
+				</p>
+			</form>
+		</div>
+	</body>
+</html>

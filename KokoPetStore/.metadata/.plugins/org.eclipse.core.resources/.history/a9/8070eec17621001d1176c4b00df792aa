@@ -1,0 +1,21 @@
+package com.petstore.common.entity;
+
+import java.util.List;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "categories")
+public class Category {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+	
+	@Column(length = 128, nullable = false, unique = true)
+	private String Name;
+	@Column(length = 128, nullable = false)
+	private String Picture;
+	
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Product> products;
+}

@@ -1,0 +1,120 @@
+package com.petstore.common.entity;
+
+import java.util.Date;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "products")
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+	@Column(length = 40, nullable = false, unique = true)
+	private String name;
+	@Column(length = 512, nullable = false)
+	private String description;
+	@Column(length = 512, nullable = false)
+	private String picture;
+	
+	@Column(name = "created_time")
+	private Date createdTime;
+	@Column(name = "updated_time")
+	private Date updateTime;
+	
+	private float price;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "brand_id", nullable = false)
+	private Brand brand;
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+
+	public Product(String name, String description, String picture, Date createdTime, Date updateTime, float price,
+			Category category, Brand brand) {
+		this.name = name;
+		this.description = description;
+		this.picture = picture;
+		this.createdTime = createdTime;
+		this.updateTime = updateTime;
+		this.price = price;
+		this.category = category;
+		this.brand = brand;
+	}
+	
+	
+}

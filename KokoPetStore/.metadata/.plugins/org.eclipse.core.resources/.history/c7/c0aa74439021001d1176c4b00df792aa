@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Pet Store Users</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+		
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  				<h1>Pet Store</h1>
+  				<div class="collapse navbar-collapse" id="navbarNav">
+   					 <ul class="navbar-nav">
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Main Page</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/users}">Users</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/customers}">Customers</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/products}">Products</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/categories}">Customers</a>
+      					</li>
+   					 </ul>
+ 				 </div>
+			</nav>
+			</div>
+			<div>
+				<h2>Manage Users</h2>
+				<a class="btn btn-outline-primary" th:href="@{/users}" role="button">Manage Users</a>
+				<a class="btn btn-outline-primary" th:href="@{/users/new}" role="button">New Users</a>
+			</div>
+			<div>
+				<form th:action="@{/users/page/1}" class="form-inline m-4">
+					Filter: &nbsp; &nbsp;
+					<input type="search" name="keyword" required/>
+				</form>
+			</div>
+		<div>
+			<table class="table">
+  				<thead class="thead-light">
+    				<tr>
+      					<th>#</th>
+      					<th>
+      						<a th:if="${sortField != 'firstName'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">First Name
+      						</a>
+      						<a th:if="${sortField == 'firstName'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">First Name
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'lastName'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir}}">Last Name
+      						</a>
+      						<a th:if="${sortField == 'lastName'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">Last Name
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'email'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}">Email
+      						</a>
+      						<a th:if="${sortField == 'email'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">Email
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'role'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=role&sortDir=' + ${sortDir}}">Role
+      						</a>
+      						<a th:if="${sortField == 'role'}" class="text-orange"
+      						th:href="@{'/users/page/' + ${currentPage} + '?sortField=role&sortDir=' + ${reverseSortDir}}">Role
+      						</a>
+      					</th>
+      					<th>Options</th>
+    				</tr>
+  				</thead>
+  				<tbody>
+    				<tr scope="row" th:each="user : ${listUsers}">
+    					<td>[[${user.id}]]</td>
+    					<td>[[${user.firstName}]]</td>
+    					<td>[[${user.lastName}]]</td>
+    					<td>[[${user.email}]]</td>
+    					<td>[[${user.role}]]</td>
+    					<td>
+    						<a class="btn btn-success" th:href="@{'/users/edit/' + ${user.id}}" role="button">Edit</a>
+    						&nbsp;
+    						<a class="btn btn-danger" th:href="@{'/users/delete/' + ${user.id}}" role="button">Remove</a>
+    					</td>
+    				</tr>
+  				</tbody>
+			</table>
+		</div>
+		<div>
+			<span> Users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]] </span>
+		</div>
+		<div>
+			<nav>
+  				<ul class="pagination justify-content-center">
+  					<li th:class="${currentPage != i ? 'page-item' : 'page-item-active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+  						<a class="page-link" th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+  					</li>	
+  				</ul>
+			</nav>
+		</div>
+		</div>
+	</body>
+</html>

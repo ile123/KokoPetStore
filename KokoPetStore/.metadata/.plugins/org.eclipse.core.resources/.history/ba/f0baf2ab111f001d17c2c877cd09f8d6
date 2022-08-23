@@ -1,0 +1,5 @@
+package com.petstore.admin.user;
+
+public class UserRepository {
+
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Create New User</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  				<h1>Pet Store</h1>
+  				<div class="collapse navbar-collapse" id="navbarNav">
+   					 <ul class="navbar-nav">
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Main Page</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/users}">Users</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/customers}">Customers</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/products}">Products</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/categories}">Customers</a>
+      					</li>
+   					 </ul>
+ 				 </div>
+			</nav>
+			</div>
+			<div>
+				<h2>Create New Users</h2>
+				<a class="btn btn-outline-primary" th:href="@{/users}" role="button">Manage Users</a>
+				<a class="btn btn-outline-primary" th:href="@{/users/new}" role="button">New Users</a>
+			</div>
+			<form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto" th:object="${user}">
+				<div class="border border-secondary round p-3">
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label">First Name</label>
+						<div>
+							<input type="text" class="form-control" th:field="*{firstName}" required minlength="3" maxlength="12"/>
+						</div>
+						<label class="col-sm-4 col-form-label">Last Name</label>
+						<div>
+							<input type="txt" class="form-control" th:field="*{lastName}" required minlength="3" maxlength="12"/>
+						</div>
+						<label class="col-sm-4 col-form-label">E-Mail</label>
+						<div>
+							<input type="email" class="form-control" th:field="*{email}" required minlength="8" maxlength="128"/>
+						</div>
+						<label class="col-sm-4 col-form-label">Password</label>
+						<div>
+							<input type="password" class="form-control" th:field="*{password}" required minlength="6" maxlength="128"/>
+						</div>
+					</div>
+					
+					<div class="text-center">
+						<input type="submit" value="Save" class="btn btn-primary m-3"/>
+						<input type="button" value="Cancel" class="btn btn-secondary"/>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
