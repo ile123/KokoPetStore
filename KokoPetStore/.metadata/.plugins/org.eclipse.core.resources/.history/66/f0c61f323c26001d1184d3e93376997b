@@ -1,0 +1,10 @@
+package com.petstore.customer;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class CustomerService {
+	
+	@Autowired
+	private CustomerRepository repo;
+}

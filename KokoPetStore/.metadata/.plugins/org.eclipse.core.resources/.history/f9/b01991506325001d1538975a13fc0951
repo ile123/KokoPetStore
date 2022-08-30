@@ -1,0 +1,25 @@
+package com.petstore;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.petstore.category.CategoryService;
+import com.petstore.common.entity.Category;
+
+@Controller
+public class MainController {
+	
+	@Autowired
+	private CategoryService service;
+
+	@GetMapping("")
+	public String viewHomePage(Model model) {
+		List<Category> listCategories = service.listAllCategories();
+		
+		return "index";
+	}
+}

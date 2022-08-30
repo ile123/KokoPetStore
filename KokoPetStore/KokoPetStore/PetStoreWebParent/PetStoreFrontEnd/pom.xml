@@ -9,11 +9,16 @@
 	</parent>
 	<artifactId>PetStoreFrontEnd</artifactId>
 	<name>PetStoreFrontEnd</name>
-	<description>Pet Store Web Application</description>
+	<description>Frontend for PetStore</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

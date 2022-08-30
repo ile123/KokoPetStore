@@ -1,0 +1,6 @@
+package com.petstore.admin.product;
+
+@Service
+public class ProductService {
+
+}

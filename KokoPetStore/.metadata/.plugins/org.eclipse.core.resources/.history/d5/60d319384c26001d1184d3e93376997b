@@ -1,0 +1,36 @@
+package com.petstore.customer;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Customer;
+import com.petstore.common.entity.User;
+
+@Service
+public class CustomerService {
+	
+	private static final Integer CUSTOMERSPERPAGE = 5;
+	
+	@Autowired
+	private CustomerRepository repo;
+	
+	public List<Customer> GetAllCustomers(){
+		return (List<Customer>) repo.findAll();
+	}
+	
+	public void save(Customer customer) {
+		boolean customerExists = (customer.getId() != null);
+		if(customerExists) {
+			update(customer);
+		}
+		else {
+			if(!isEmailUnique(customer.getEmail())) {
+				return;
+			}
+			encodePassword(customer);
+		}
+		repo.save(customer);
+	}
+}

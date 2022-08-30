@@ -1,0 +1,15 @@
+package com.petstore.customer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CustomerService {
+	
+	private static final CUSTOMERSPERPAGE = 5;
+	
+	@Autowired
+	private CustomerRepository repo;
+	
+	
+}

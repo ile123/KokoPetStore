@@ -1,0 +1,18 @@
+package com.petstore.shoppingcart;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+import com.petstore.common.entity.CartItem;
+import com.petstore.common.entity.Customer;
+import com.petstore.common.entity.Product;
+
+public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
+	
+	@Query("SELECT x FROM CartItem x WHERE x.customer = :customer")
+	public List<CartItem> findByCustomer(Customer customer);
+	@Query("SELECT x FROM Brand x WHERE x.name = :name")
+	public List<CartItem> findByProduct(Product product);
+}

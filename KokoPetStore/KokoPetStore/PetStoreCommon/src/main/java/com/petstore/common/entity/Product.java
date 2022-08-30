@@ -1,6 +1,8 @@
 package com.petstore.common.entity;
 
-import java.util.Date;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -13,14 +15,11 @@ public class Product {
 	@Column(length = 40, nullable = false, unique = true)
 	private String name;
 	@Column(length = 512, nullable = false)
+	private String shortDescription;
+	@Column(length = 4096, nullable = false)
 	private String description;
 	@Column(length = 512, nullable = false)
 	private String picture;
-	
-	@Column(name = "created_time")
-	private Date createdTime;
-	@Column(name = "updated_time")
-	private Date updateTime;
 	
 	private float price;
 	
@@ -31,6 +30,9 @@ public class Product {
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "brand_id", nullable = false)
 	private Brand brand;
+	
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "product")
+	private List<CartItem> costumers = new ArrayList<CartItem>();
 
 	public Integer getId() {
 		return Id;
@@ -64,22 +66,6 @@ public class Product {
 		this.picture = picture;
 	}
 
-	public Date getCreatedTime() {
-		return createdTime;
-	}
-
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
 	public float getPrice() {
 		return price;
 	}
@@ -104,16 +90,46 @@ public class Product {
 		this.brand = brand;
 	}
 
-	public Product(String name, String description, String picture, Date createdTime, Date updateTime, float price,
-			Category category, Brand brand) {
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+	
+	@Transient
+	 public String getPictureImagePath() {
+		 if(picture == null || Id == null) {
+			 return null;
+		 } else {
+			 return "/product-images/" + Id + "/" + picture;
+		 }
+	 }
+
+	public Product(String name, String description, String picture, float price, Category category, Brand brand) {
 		this.name = name;
 		this.description = description;
 		this.picture = picture;
-		this.createdTime = createdTime;
-		this.updateTime = updateTime;
 		this.price = price;
 		this.category = category;
 		this.brand = brand;
+	}
+
+	public Product() {
+		
+	}
+
+	public Product(Integer id) {
+		Id = id;
+	}
+
+	public List<CartItem> getCostumers() {
+		return costumers;
+	}
+
+	public void setCostumers(List<CartItem> costumers) {
+		this.costumers = costumers;
 	}
 	
 	

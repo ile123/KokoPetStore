@@ -1,0 +1,39 @@
+package com.petstore.admin.category;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.petstore.common.entity.Category;
+import com.petstore.common.entity.User;
+
+@Controller
+public class CategoryController {
+	
+	@Autowired
+	private CategoryService service;
+	
+	@GetMapping("/categories")
+	public String listAll(Model model) {
+		List<Category> listCategories = service.listAllCategories();
+		model.addAttribute("listCategories", listCategories);
+		return "category/categories";
+	}
+	@GetMapping("/categories/new")
+	public String newCategory(Model model) {
+		Category category = new Category();
+		model.addAttribute("category", category);
+		model.addAttribute("pageTitle", "Create New Category");
+		return "category/category_form";
+	}
+	
+	@PostMapping("/users/save")
+	public String saveCategory(Category category) {
+		service.save(category):
+			return "redirect:/categories";
+	}
+}

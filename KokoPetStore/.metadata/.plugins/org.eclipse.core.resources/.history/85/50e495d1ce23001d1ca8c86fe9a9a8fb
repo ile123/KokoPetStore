@@ -1,0 +1,31 @@
+package com.petstore.admin.products;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.Rollback;
+
+import com.petstore.admin.product.ProductRepository;
+import com.petstore.common.entity.Brand;
+import com.petstore.common.entity.Category;
+import com.petstore.common.entity.Product;
+
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@Rollback(false)
+public class ProductRepositoryTest {
+	
+	@Autowired
+	private ProductRepository repo;
+	
+	@Autowired
+	private TestEntityManager entityManager;
+	
+	Brand brand = entityManager.find(Brand.class, 10);
+	Category category = entityManager.find(Category.class, 15);
+	
+	Product product = new Product();
+	product
+}

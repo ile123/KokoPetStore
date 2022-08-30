@@ -1,0 +1,28 @@
+package com.petstore.shoppingcart;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Customer;
+import com.petstore.common.entity.Product;
+import com.petstore.common.entity.CartItem;
+import com.petstore.common.entity.Category;
+
+@Service
+public class CartItemService {
+	
+	@Autowired
+	private CartItemRepository repo;
+	
+	public List<Category> listAllCategories(){
+		return (List<CartItem>) repo.findAll();
+	}
+	
+	public void addProduct(Integer productId, Customer customer) {
+		Product product = new Product(productId);
+		CartItem cartItem = new CartItem(customer,product);
+		repo.save(cartItem);
+	}
+}

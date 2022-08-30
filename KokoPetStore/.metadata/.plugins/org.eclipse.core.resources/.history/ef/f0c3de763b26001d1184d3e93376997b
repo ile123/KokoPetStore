@@ -1,0 +1,5 @@
+package com.petstore.customer;
+
+public class CustomerService {
+
+}

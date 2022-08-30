@@ -1,0 +1,12 @@
+package com.petstore.product;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class ProductService {
+	
+	public static finalinte PRODUCTSPERPAGE = 10;
+	
+	@Autowired
+	private ProductRepository repo;
+}

@@ -1,0 +1,137 @@
+package com.petstore.common.entity;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "products")
+public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer Id;
+	@Column(length = 40, nullable = false, unique = true)
+	private String name;
+	@Column(length = 512, nullable = false)
+	private String shortDescription;
+	@Column(length = 4096, nullable = false)
+	private String description;
+	@Column(length = 512, nullable = false)
+	private String picture;
+	
+	private float price;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "brand_id", nullable = false)
+	private Brand brand;
+	
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, mappedBy = "product")
+	private List<CartItem> costumers = new ArrayList();
+
+	public Integer getId() {
+		return Id;
+	}
+
+	public void setId(Integer id) {
+		Id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+	
+	@Transient
+	 public String getPictureImagePath() {
+		 if(picture == null || Id == null) {
+			 return null;
+		 } else {
+			 return "/product-images/" + Id + "/" + picture;
+		 }
+	 }
+
+	public Product(String name, String description, String picture, float price, Category category, Brand brand) {
+		this.name = name;
+		this.description = description;
+		this.picture = picture;
+		this.price = price;
+		this.category = category;
+		this.brand = brand;
+	}
+
+	public Product() {
+		
+	}
+
+	public Product(Integer id) {
+		Id = id;
+	}
+
+	public List<CartItem> getCostumers() {
+		return costumers;
+	}
+
+	public void setCostumers(List<CartItem> costumers) {
+		this.costumers = costumers;
+	}
+	
+	
+}

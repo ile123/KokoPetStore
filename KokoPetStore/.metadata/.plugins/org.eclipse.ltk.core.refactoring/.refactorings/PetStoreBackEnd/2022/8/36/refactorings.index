@@ -1,0 +1,21 @@
+1661681244626	Copy compilation units
+1661681291958	Rename type 'UserRepository'
+1661681305206	Rename type 'UserService'
+1661681323292	Rename type 'UserController'
+1661682540763	Copy files
+1661683339769	Rename resource 'user_form.html'
+1661683348826	Rename resource 'users.html'
+1661689253707	Copy compilation units
+1661692274622	Copy file
+1661697841369	Rename type 'PetStoreUserDetails'
+1661697854106	Rename type 'PetStoreUserDetailService'
+1661698255740	Rename type 'CustomerUserDetails'
+1661698270284	Rename type 'CustomerUserDetailService'
+1661700772340	Copy file
+1661766152700	Copy folder
+1661766162605	Delete element
+1661787323367	Copy file
+1661841488055	Move 'error.html' to 'templates'
+1661841593258	Move 'error.html' to 'errors'
+1661842129661	Rename compilation unit 'ErrorController.java'
+1661843421116	Copy compilation unit

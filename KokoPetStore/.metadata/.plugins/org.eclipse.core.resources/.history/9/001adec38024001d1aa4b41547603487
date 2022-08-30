@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Pet Store</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<h1>WELCOME TO PET STORE</h1>
+	</body>
+</html>

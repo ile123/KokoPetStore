@@ -1,0 +1,34 @@
+package com.petstore.admin.category;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Category;
+import com.petstore.common.entity.User;
+
+@Service
+public class CategoryService{
+	
+	@Autowired
+	private CategoryRepository repo;
+	
+	public static final int CategoriesPerPage = 5;
+	
+	public List<Category> listAllCategories(){
+		return (List<Category>) repo.findAll();
+	}
+	
+	public void save(Category category) {
+		if(!getCategoryByName(category.getName())) {
+			return;
+		}
+		repo.save(category);
+	}
+	
+	public boolean isCategoryNameUnique(Category category) {
+		Category category = repo.getCategoryByName(category.getName());
+		return category == null;
+	}
+}

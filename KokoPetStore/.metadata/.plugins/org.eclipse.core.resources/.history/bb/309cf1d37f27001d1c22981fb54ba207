@@ -1,0 +1,11 @@
+$(document).ready(function(){
+	$("#buttonAddToCart").on("click", function(evt){
+		addToCart();
+	});
+});
+
+function addToCart(){
+	url = contextPath + "cart/buy/" + productId
+	
+	alert(url);
+}

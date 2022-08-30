@@ -1,0 +1,22 @@
+package com.petstore.category;
+
+//import java.util.List;
+
+//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+//import com.petstore.common.entity.Category;
+
+@Service
+public class CategoryService {
+	
+	/*
+	@Autowired
+	private CategoryRepository repo;
+	*/
+	/*
+	public List<Category> listAllCategories(){
+		return (List<Category>) repo.findAll();
+	}
+	*/
+}

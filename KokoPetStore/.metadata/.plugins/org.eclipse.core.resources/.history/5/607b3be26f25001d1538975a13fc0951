@@ -1,0 +1,11 @@
+package com.petstore.product;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.petstore.common.entity.Product;
+
+public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
+	
+	@Query("SELECT x FROM Product WHERE (x.category.id = ?1)")
+	public Page<Product> listByCategory(Integer categoryId);
+}

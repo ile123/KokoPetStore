@@ -1,0 +1,41 @@
+package com.petstore.product;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Product;
+
+@Service
+public class ProductService {
+	
+	public static final int PRODUCTSPERPAGE = 10;
+	
+	@Autowired
+	private ProductRepository repo;
+	
+	public List<Product> listAllProducts(){
+		return (List<Product>) repo.findAll();
+	}
+	
+	public Product get(Integer id) {
+		return repo.findById(id).get();
+	}
+	
+	public Page<Product> listByPage(int pageNum, String sortField, String sortDir, String keyword){
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+		Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTSPERPAGE, sort);
+		
+		if(keyword != null) {
+			return repo.findAll(keyword,pageable);
+		}
+		
+		return repo.findAll(pageable);
+	}
+}

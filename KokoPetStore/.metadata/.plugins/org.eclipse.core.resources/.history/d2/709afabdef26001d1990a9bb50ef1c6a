@@ -1,0 +1,5 @@
+package com.petstore.shoppingcart;
+
+public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
+
+}

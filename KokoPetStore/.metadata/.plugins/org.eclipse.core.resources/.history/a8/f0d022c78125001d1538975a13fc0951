@@ -1,0 +1,23 @@
+package com.petstore.product;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Product;
+
+@Service
+public class ProductService {
+	
+	public static final int PRODUCTSPERPAGE = 10;
+	
+	@Autowired
+	private ProductRepository repo;
+	
+	public Page<Product> listByCategory(int pageNum, int categoryId){
+		Pageable page = PageRequest.of(pageNum, PRODUCTSPERPAGE);
+		return repo.listByCategory(categoryId, page);
+	}
+}

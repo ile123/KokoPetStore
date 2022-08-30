@@ -1,0 +1,12 @@
+package com.petstore.shoppingcart;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.petstore.common.entity.CartItem;
+
+public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
+	
+	public List<CartItem> findByCustomer(Customer customer);
+	
+	public List<CartItem> findByProduct(Product product);
+}

@@ -1,0 +1,44 @@
+package com.petstore.customer;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.petstore.common.entity.Customer;
+@Controller
+public class CustomerController {
+
+	@Autowired
+	private CustomerService service;
+	
+	@GetMapping("/register")
+	public String displayRegistrationForm(Model model) {
+		Customer customer = new Customer();
+		
+		model.addAttribute("pageTitle", "Customer Registration");
+		model.addAttribute("customer", customer);
+		
+		return "customer/register_form";
+	}
+	
+	@PostMapping("/register/new")
+	public String saveUser(Customer customer) {
+		service.save(customer);
+		return "index";
+	}
+	
+	@GetMapping("/customers/edit/{id}")
+	public String editCustomer(@PathVariable(name = "id") Integer id, Model model) {
+		Customer customer = service.get(id);
+		if(customer == null) {
+			return "redirect:/customers";
+		}
+		model.addAttribute("customer",customer);
+		model.addAttribute("pageTitle","Edit Customer(ID: " + id + ")");
+		return "customer/customer_form";
+	}
+	
+}

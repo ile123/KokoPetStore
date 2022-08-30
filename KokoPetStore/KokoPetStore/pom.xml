@@ -5,11 +5,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>KokoPetStore</name>
-  <description>Root Project</description>
-  
-  <modules>
-  	<module>PetStoreCommon</module>
-  	<module>PetStoreWebParent</module>
-  </modules>
-  
+  <description>Root Project for KokoPetStore</description>
+
+	<modules>
+		<module>PetStoreCommon</module>
+		<module>PetStoreWebParent</module>
+	</modules>
+
 </project>

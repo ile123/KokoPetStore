@@ -1,0 +1,15 @@
+package com.petstore.admin.product;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class ProductCategory {
+	@Autowired
+	private ProductService service;
+	
+	@GetMapping("/products")
+	public String listAll(Model model) {
+		return "products";
+	}
+}

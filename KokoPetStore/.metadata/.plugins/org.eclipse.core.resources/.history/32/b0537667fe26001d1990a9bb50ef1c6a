@@ -1,0 +1,6 @@
+package com.petstore.shoppingcart;
+
+@Service
+public class CartItemService {
+
+}

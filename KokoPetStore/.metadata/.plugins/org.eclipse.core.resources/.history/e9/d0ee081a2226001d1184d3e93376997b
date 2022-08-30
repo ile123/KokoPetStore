@@ -1,0 +1,18 @@
+package com.petstore.product;
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.petstore.common.entity.Product;
+
+public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
+	
+	@Query("SELECT x FROM Product WHERE (x.category.id = ?1) ORDER BY x.name ASC")
+	public Page<Product> listByCategory(Integer categoryId, Pageable page);
+	
+	@Query("SELECT x FROM Product x WHERE x.name LIKE %?1%")
+	public Page<Product> findAll(String keyword, Pageable pageable);
+}

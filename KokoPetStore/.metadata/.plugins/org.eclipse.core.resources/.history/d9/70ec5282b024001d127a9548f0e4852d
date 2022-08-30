@@ -1,0 +1,5 @@
+package com.petstore.category;
+
+public class CategoryService {
+
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Pet Store Customers</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+		
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+				<input type="submit" />
+			</form>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  				<h1>Pet Store</h1>
+  				<div class="collapse navbar-collapse" id="navbarNav">
+   					 <ul class="navbar-nav">
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Main Page</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/users}">Users</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/customers}">Customers</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/products}">Products</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/categories}">Categories</a>
+      					</li>
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/brands}">Brands</a>
+      					</li>
+      					<li>
+      						<button class="btn btn-warning" onClick="document.logoutForm.submit()">Logout</button>
+      					</li>
+   					 </ul>
+ 				 </div>
+			</nav>
+			</div>
+			<div>
+				<h2>Manage Customers</h2>
+				<a class="btn btn-outline-primary" th:href="@{/customers}" role="button">Manage Customers</a>
+				<a class="btn btn-outline-primary" th:href="@{/customers/new}" role="button">New Customer</a>
+			</div>
+			<div>
+				<form th:action="@{/customers/page/1}" class="form-inline m-4">
+					<input type="hidden" name="sortField" th:value="${sortField}" />
+					<input type="hidden" name="sortDir" th:value="${sortDir}" />
+					Filter: &nbsp; &nbsp;
+					<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+					&nbsp; &nbsp;
+					<input type="submit" value="Search" class="btn btn-info"/>
+					&nbsp; &nbsp;
+				</form>
+			</div>
+		<div>
+			<table class="table">
+  				<thead class="thead-light">
+    				<tr>
+      					<th>
+      						<a th:if="${sortField != 'Id'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">#
+      						</a>
+      						<a th:if="${sortField == 'Id'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">#
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'firstName'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">First Name
+      						</a>
+      						<a th:if="${sortField == 'firstName'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">First Name
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'lastName'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir}}">Last Name
+      						</a>
+      						<a th:if="${sortField == 'lastName'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">Last Name
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'email'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}">Email
+      						</a>
+      						<a th:if="${sortField == 'email'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">Email
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'address'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=address&sortDir=' + ${sortDir}}">Address
+      						</a>
+      						<a th:if="${sortField == 'address'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=address&sortDir=' + ${reverseSortDir}}">Address
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'city'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=city&sortDir=' + ${sortDir}}">City
+      						</a>
+      						<a th:if="${sortField == 'city'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=city&sortDir=' + ${reverseSortDir}}">City
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'country'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=country&sortDir=' + ${sortDir}}">Country
+      						</a>
+      						<a th:if="${sortField == 'country'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=country&sortDir=' + ${reverseSortDir}}">Country
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'province'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=province&sortDir=' + ${sortDir}}">Province
+      						</a>
+      						<a th:if="${sortField == 'province'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=province&sortDir=' + ${reverseSortDir}}">Province
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'postalCode'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=postalCode&sortDir=' + ${sortDir}}">Postal Code
+      						</a>
+      						<a th:if="${sortField == 'postalCode'}" class="text-orange"
+      						th:href="@{'/customers/page/' + ${currentPage} + '?sortField=postalCode&sortDir=' + ${reverseSortDir}}">Postal Code
+      						</a>
+      					</th>
+      					<th>Options</th>
+    				</tr>
+  				</thead>
+  				<tbody>
+    				<tr scope="row" th:each="customer : ${listCustomers}">
+    					<td>[[${customer.id}]]</td>
+    					<td>[[${customer.firstName}]]</td>
+    					<td>[[${customer.lastName}]]</td>
+    					<td>[[${customer.email}]]</td>
+    					<td>[[${customer.address}]]</td>
+    					<td>[[${customer.city}]]</td>
+    					<td>[[${customer.country}]]</td>
+    					<td>[[${customer.province}]]</td>
+    					<td>[[${customer.postalCode}]]</td>
+    					<td>
+    						<a class="btn btn-success" th:href="@{'/customers/edit/' + ${customer.id}}" role="button">Edit</a>
+    						&nbsp;
+    						<a class="btn btn-danger" th:href="@{'/customers/delete/' + ${customer.id}}" role="button">Remove</a>
+    					</td>
+    				</tr>
+  				</tbody>
+			</table>
+		</div>
+		<div>
+			<span> Customers # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]] </span>
+		</div>
+		<div th:if="${totalItems > 0}">
+			<nav>
+  				<ul class="pagination justify-content-center">
+  					<li th:class="${currentPage != i ? 'page-item' : 'page-item-active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+  						<a class="page-link" th:href="@{'/customers/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+  					</li>	
+  				</ul>
+			</nav>
+		</div>
+		</div>
+	</body>
+</html>

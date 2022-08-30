@@ -1,0 +1,23 @@
+package com.petstore.customer;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.petstore.common.entity.Customer;
+
+@Service
+public class CustomerService {
+	
+	private static final Integer CUSTOMERSPERPAGE = 10;
+	
+	@Autowired
+	private CustomerRepository repo;
+	
+	private List<Customer> GetAllCustomers(){
+		return (List<Customer>) repo.findAll();
+	}
+	
+	
+}

@@ -1,0 +1,78 @@
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Pet Store</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  				<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+					<input type="submit" />
+				</form>
+  				<h1>Pet Store</h1>
+  				<div class="collapse navbar-collapse" id="navbarNav">
+   					 <ul class="navbar-nav">
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Main Page</a>
+      					</li>
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/products}">Products</a>
+      					</li>
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Payments</a>
+      					</li>
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Login</a>
+      					</li>
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/products}">Register</a>
+      					</li>
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Carrers</a>
+      					</li>
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Contact</a>
+      					</li>
+      					<li>
+      						<button class="btn btn-warning" onClick="document.logoutForm.submit()">Logout</button>
+      					</li>
+   					 </ul>
+ 				 </div>
+			</nav>
+			<div>
+				<form th:action="@{/products/page/1}" class="form-inline m-4">
+					<input type="hidden" name="sortField" th:value="${sortField}" />
+					<input type="hidden" name="sortDir" th:value="${sortDir}" />
+					Filter: &nbsp; &nbsp;
+					<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+					&nbsp; &nbsp;
+					<input type="submit" value="Search" class="btn btn-info"/>
+					&nbsp; &nbsp;
+				</form>
+			</div>
+			<div class="row">
+				<th:block th:each="product : ${listProducts}">
+					<div class="col">
+					<form th:action="@{/cart/buy}" method="post" style="max-width: 700px; margin: 0 auto" th:object="${CartItem}">
+					<input type="hidden" th:field="*{id}"/>
+						<div class="card" style="width: 18rem;">
+  							<img th:src="@{../static/images/blank.png}" class="card-img-top" alt="image">
+  							<div class="card-body">
+    							<h5 class="card-title">[[${product.name}]]</h5>
+   								 <p class="card-text">[[${product.shortDescription}]]</p>
+   								 <p class="card-text">[[${product.price}]]</p>
+   								  <p class="card-text">Category: [[${product.category.name}]]</p>
+   								 <p class="card-text">Brand: [[${product.brand.name}]]</p>
+   								 <input type="submit" value="Save" class="btn btn-primary m-3"/>
+    							 <a th:href="@{'/products/productDetails/' + ${product.Id}}" class="btn btn-primary">Details</a>
+  							</div>
+						</div>
+					</form>
+					</div>
+				</th:block>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,20 @@
+package com.petstore.product;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class ProductController {
+	
+	@Autowired
+	private ProductService service;
+	
+	@GetMapping("/products")
+	public String listFirstPage(Model model) {
+		return listByPage(1, model, "name", "asc", null);
+	}
+	
+	
+
+}

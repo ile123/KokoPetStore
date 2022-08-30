@@ -1,0 +1,5 @@
+package com.petstore.admin.brand;
+
+public class BrandController {
+
+}

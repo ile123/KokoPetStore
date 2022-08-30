@@ -1,0 +1,6 @@
+$(document).ready(function(){
+	$("#buttonAddToCart").on("click", function(evt){
+		addToCart();
+	});
+});
+

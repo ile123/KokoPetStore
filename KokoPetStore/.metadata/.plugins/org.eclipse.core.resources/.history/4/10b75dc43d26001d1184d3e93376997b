@@ -1,0 +1,26 @@
+package com.petstore.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.petstore.admin.user.UserRepository;
+import com.petstore.common.entity.User;
+import com.petstore.customer.CustomerRepository;
+
+public class PetStoreCustomerDetailService implements UserDetailsService {
+
+	@Autowired
+	private CustomerRepository repo;
+	
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = repo.getCustomerByEmail(email);
+		if(user != null) {
+			return new PetStoreCustomerDetails(user);
+		}
+		throw new UsernameNotFoundException("User not found with given email" + email);
+	}
+
+}
