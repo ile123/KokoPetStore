@@ -11,6 +11,7 @@
   				<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
 					<input type="submit" />
 				</form>
+				<img th:src="@{/images/kokologo_3_8.png}"/>
   				<h1>Pet Store</h1>
   				<div class="collapse navbar-collapse" id="navbarNav">
    					 <ul class="navbar-nav">
@@ -63,7 +64,7 @@
 				<th:block th:each="product : ${listProducts}">
 					<div class="col">
 						<div class="card" style="width: 18rem;">
-  							<img th:src="@{../static/images/blank.png}" class="card-img-top" alt="image">
+  							<img th:src="@{/images/blank.png}" class="card-img-top" alt="image">
   							<div class="card-body">
     							<h5 class="card-title">[[${product.name}]]</h5>
    								 <p class="card-text">[[${product.shortDescription}]]</p>

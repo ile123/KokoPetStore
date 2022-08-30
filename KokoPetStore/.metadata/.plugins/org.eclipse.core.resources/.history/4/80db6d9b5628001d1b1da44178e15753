@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<head>
+		<title>Pet Store Categories</title>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}">
+		<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css}">
+		<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+		
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div>
+				<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+				<input type="submit" />
+			</form>
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  				<h1>Pet Store</h1>
+  				<div class="collapse navbar-collapse" id="navbarNav">
+   					 <ul class="navbar-nav">
+      					<li class="nav-item active">
+        					<a class="nav-link" th:href="@{/}">Main Page</a>
+      					</li>
+      					<th:block sec:authorize="hasAnyAuthority('Admin')">
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/users}">Users</a>
+      					</li>
+      					</th:block>
+      					<th:block sec:authorize="hasAnyAuthority('Admin')">
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/customers}">Customers</a>
+      					</li>
+      					</th:block>
+      					<th:block sec:authorize="hasAnyAuthority('Admin', 'Employee')">
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/products}">Products</a>
+      					</li>
+      					</th:block>
+      					<th:block sec:authorize="hasAnyAuthority('Admin', 'Employee')">
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/categories}">Categories</a>
+      					</li>
+      					</th:block>
+      					<th:block sec:authorize="hasAnyAuthority('Admin', 'Employee')">
+      					<li class="nav-item">
+        					<a class="nav-link" th:href="@{/brands}">Brands</a>
+      					</li>
+      					</th:block>
+      					<li>
+      						<button class="btn btn-warning" onClick="document.logoutForm.submit()">Logout</button>
+      					</li>
+   					 </ul>
+ 				 </div>
+			</nav>
+			</div>
+			<div>
+				<h2>Manage Brands</h2>
+				<a class="btn btn-outline-primary" th:href="@{/brands}" role="button">Manage Brands</a>
+				<a class="btn btn-outline-primary" th:href="@{/brands/new}" role="button">New Brands</a>
+			</div>
+			<div>
+				<form th:action="@{/brands/page/1}" class="form-inline m-4">
+					<input type="hidden" name="sortField" th:value="${sortField}" />
+					<input type="hidden" name="sortDir" th:value="${sortDir}" />
+					Filter: &nbsp; &nbsp;
+					<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+					&nbsp; &nbsp;
+					<input type="submit" value="Search" class="btn btn-info"/>
+					&nbsp; &nbsp;
+				</form>
+			</div>
+		<div>
+			<table class="table">
+  				<thead class="thead-light">
+    				<tr>
+      					<th>
+      						<a th:if="${sortField != 'Id'}" class="text-orange"
+      						th:href="@{'/brands/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${sortDir}}">#
+      						</a>
+      						<a th:if="${sortField == 'Id'}" class="text-orange"
+      						th:href="@{'/brands/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">#
+      						</a>
+      					</th>
+      					<th>
+      						<a th:if="${sortField != 'name'}" class="text-orange"
+      						th:href="@{'/brands/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${sortDir}}">Name
+      						</a>
+      						<a th:if="${sortField == 'name'}" class="text-orange"
+      						th:href="@{'/brands/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name
+      						</a>
+      					</th>
+      					<th>
+      						<span>Picture</span>
+      					</th>
+      					<th>Options</th>
+      					
+    				</tr>
+  				</thead>
+  				<tbody>
+    				<tr scope="row" th:each="brand : ${listBrands}">
+    					<td>[[${brand.Id}]]</td>
+    					<td>[[${brand.name}]]</td>
+    					<td>
+    						<img th:src="@{images/blank.png}" alt="Blank">
+    					</td>
+    					<td>
+    						<a class="btn btn-success" th:href="@{'/brands/edit/' + ${brand.Id}}" role="button">Edit</a>
+    						&nbsp;
+    						<a class="btn btn-danger" th:href="@{'/brands/delete/' + ${brand.Id}}" role="button">Remove</a>
+    					</td>
+    				</tr>
+  				</tbody>
+			</table>
+		</div>
+		<div>
+			<span> Brands # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]] </span>
+		</div>
+		<div th:if="${totalItems > 0}">
+			<nav>
+  				<ul class="pagination justify-content-center">
+  					<li th:class="${currentPage != i ? 'page-item' : 'page-item-active'}" th:each="i : ${#numbers.sequence(1, totalPages)}">
+  						<a class="page-link" th:href="@{'/brands/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+  					</li>	
+  				</ul>
+			</nav>
+		</div>
+		</div>
+	</body>
+</html>

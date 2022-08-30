@@ -1,0 +1,28 @@
+package com.petstore.admin;
+
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.nio.file.*;
+
+public class MvcConfig implements WebMvcConfigurer {
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		String categoryImagesDirName = "../category-images";
+		Path categoryImagesDir = Paths.get(categoryImagesDirName);
+		
+		String categoryImagePath = categoryImagesDir.toFile().getAbsolutePath();
+		
+		registry.addResourceHandler("/category-images/**")
+		.addResourceLocations("file:/" + categoryImagePath + "/");
+		
+		String brandImagesDirName = "../brand-images";
+		Path brandImagesDir = Paths.get(brandImagesDirName);
+		
+		String brandImagePath = brandImagesDir.toFile().getAbsolutePath();
+		
+		registry.addResourceHandler("/brand-images/**")
+		.addResourceLocations("file:/" + brandImagePath + "/");
+	}
+}
