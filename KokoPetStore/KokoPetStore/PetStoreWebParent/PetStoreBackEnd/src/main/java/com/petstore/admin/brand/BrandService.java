@@ -24,19 +24,14 @@ public class BrandService {
 	}
 	
 	public void save(Brand brand) {
-		boolean brandExists = (brand.getId() != null);
-		if(brandExists) {
-			update(brand);
-		}
-		else {
-			if(!isBrandNameUnique(brand.getName())) {
-				return;
-			}
+		if(!isBrandNameUnique(brand.getName())) {
+			return;
 		}
 		repo.save(brand);
 	}
 	
 	public void update(Brand brand) {
+		/*
 		if(!isBrandNameUnique(brand.getName())) {
 			return;
 		}
@@ -44,10 +39,11 @@ public class BrandService {
 		if(brand.getName().isEmpty()) {
 			brand.setName(existingBrand.getName());
 		}
+		*/
 		//brand.setPicture("/PetStoreBackEnd/src/main/resources/static/images/blank.png");
-		repo.save(brand);
+		repo.updateBrand(brand.getName(), brand.getId());
 	}
-	
+
 	public void delete(Integer id) {
 		if(repo.findById(id).get() == null) {
 			return;
@@ -56,7 +52,7 @@ public class BrandService {
 	}
 	
 	public boolean isBrandNameUnique(String name) {
-		Brand brandByName = repo.getBrandByName(name);
+		var brandByName = repo.getBrandByName(name);
 		return brandByName == null;
 	}
 	

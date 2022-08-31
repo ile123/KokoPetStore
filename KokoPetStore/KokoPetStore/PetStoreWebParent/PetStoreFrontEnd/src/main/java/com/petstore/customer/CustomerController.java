@@ -6,7 +6,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.petstore.common.entity.Customer;
 @Controller
@@ -38,9 +41,26 @@ public class CustomerController {
 		if(customer == null) {
 			return "redirect:/";
 		}
+		System.out.println(customer.getId());
 		model.addAttribute("customer",customer);
 		model.addAttribute("pageTitle","Edit Customer Information");
-		return "customer/customer_form";
+		return "customer/updateCustomer";
+	}
+	
+	@PutMapping("/customers/update")
+	public String updateUser(@ModelAttribute("customer") Customer customer) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		var tempCustomer = service.findByEmail(auth.getName());
+		tempCustomer.setFirstName(customer.getFirstName());
+		tempCustomer.setLastName(customer.getLastName());
+		tempCustomer.setAddress(customer.getAddress());
+		tempCustomer.setCity(customer.getCity());
+		tempCustomer.setCountry(customer.getCountry());
+		tempCustomer.setProvince(customer.getProvince());
+		tempCustomer.setPostalCode(customer.getPostalCode());
+		tempCustomer.setPassword(customer.getPassword());
+		service.update(tempCustomer);
+		return "redirect:/customers";
 	}
 	
 	@PostMapping("/customers/save")

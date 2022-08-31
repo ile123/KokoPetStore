@@ -23,52 +23,25 @@ public class ProductService {
 	
 	public static final int ProductsPerPage = 5;
 	
-	public List<Product> listAllProducts(){
+	public List<Product> GetAllProducts(){
 		return (List<Product>) repo.findAll();
 	}
 	
 	public void save(Product product) {
-		boolean productExists = (product.getId() != null);
-		if(productExists) {
-			update(product);
-		}
-		else {
-			if(!isProductNameUnique(product.getName())) {
-				return;
+		if(!isProductNameUnique(product.getName())) {
+			return;
 			}
-		}
 		repo.save(product);
 	}
 	
 	public void update(Product product) {
-		if(!isProductNameUnique(product.getName())) {
-			return;
-		}
-		Product existingProduct = repo.findById(product.getId()).get();
-		if(product.getName().isEmpty()) {
-			product.setName(existingProduct.getName());
-		}
-		if(product.getShortDescription().isEmpty()) {
-			product.setShortDescription(existingProduct.getShortDescription());
-		}
-		if(product.getDescription().isEmpty()) {
-			product.setDescription(existingProduct.getDescription());
-		}
-		if(product.getPrice() == 0.0) {
-			product.setPrice(existingProduct.getPrice());
-		}
-		if(product.getBrand() != null) {
-			product.setBrand(existingProduct.getBrand());
-		}
-		if(product.getCategory() != null) {
-			product.setCategory(existingProduct.getCategory());
-		}
-		
+		/*
 		List<CartItem> customers = cartRepo.findByProduct(product.getId());
 		for (CartItem item : customers) {
 			item.setProduct(product);
 		}
 		product.setCostumers(customers);
+		*/
 		repo.save(product);
 	}
 	

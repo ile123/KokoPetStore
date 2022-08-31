@@ -36,40 +36,15 @@ public class UserService {
 	}
 	
 	public void save(User user) {
-		boolean userExists = (user.getId() != null);
-		if(userExists) {
-			update(user);
+		if(!isEmailUnique(user.getEmail())) {
+			return;
 		}
-		else {
-			if(!isEmailUnique(user.getEmail())) {
-				return;
-			}
-			encodePassword(user);
-		}
+		encodePassword(user);
 		repo.save(user);
 	}
 	
 	public void update(User user) {
-		if(!isEmailUnique(user.getEmail())) {
-			return;
-		}
-		User existingUser = repo.findById(user.getId()).get();
-		if(user.getFirstName().isEmpty()) {
-			user.setFirstName(existingUser.getFirstName());
-		}
-		if(user.getLastName().isEmpty()) {
-			user.setLastName(existingUser.getLastName());
-		}
-		if(user.getRole() != existingUser.getRole()) {
-			user.setRole(existingUser.getRole());
-		}
-		//popravi ovaj dio kasnije
-		if(user.getPassword().isEmpty()) {
-			user.setPassword(existingUser.getPassword());
-			encodePassword(user);
-		} else {
-			encodePassword(user);
-		}
+		encodePassword(user);
 		repo.save(user);
 	}
 	

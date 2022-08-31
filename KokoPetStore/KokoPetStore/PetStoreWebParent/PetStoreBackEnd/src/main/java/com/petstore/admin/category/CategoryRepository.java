@@ -2,9 +2,11 @@ package com.petstore.admin.category;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.petstore.common.entity.Category;
 
@@ -14,4 +16,9 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 	
 	@Query("SELECT x FROM Category x WHERE x.name LIKE %?1%")
 	public Page<Category> findAll(String keyword, Pageable pageable);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Category x SET x.name = :name WHERE x.Id = :Id")
+	public void updateCategory(@Param("name") String name, @Param("Id") Integer Id);
 }

@@ -47,7 +47,6 @@
 				<a class="btn btn-outline-primary" th:href="@{/customers/new}" role="button">[[${pageTitle}]]</a>
 			</div>
 			<form th:action="@{/customers/save}" method="post" style="max-width: 700px; margin: 0 auto" th:object="${customer}">
-			<input type="hidden" th:field="*{id}"/>
 				<div class="border border-secondary round p-3">
 					<div class="form-group row">
 						<label class="col-sm-4 col-form-label">First Name</label>

@@ -9,14 +9,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.petstore.admin.FileUploadUtil;
+import com.petstore.admin.brand.BrandService;
 import com.petstore.admin.user.UserService;
+import com.petstore.common.entity.Brand;
 import com.petstore.common.entity.Category;
 
 @Controller
@@ -33,7 +38,7 @@ public class CategoryController {
 	
 	@GetMapping("/categories/new")
 	public String NewCategory(Model model) {
-		Category category = new Category();
+		var category = new Category();
 		model.addAttribute("category",category);
 		model.addAttribute("pageTitle","Create New Category");
 		return "category/category_form";
@@ -49,29 +54,38 @@ public class CategoryController {
 			category.setPicture(fileName);
 		}
 		service.save(category);
-		Category savedCategory= service.listAllCategories()
+		var savedCategory= service.GetAllCategories()
 				.stream()
 				.filter(temp -> category.getName().equals(temp.getName()))
 				.findAny().orElse(null);
 		String uploadDir = "../category-images/" + savedCategory.getId();
 		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-		service.save(category);
+		return "redirect:/categories";
+	}
+	
+	@PutMapping("/categories/update")
+	//@RequestMapping(value = "/brands/update/{id}", method = RequestMethod.PUT)
+	public String updateCategory(@ModelAttribute("category") Category category,@RequestParam(value = "id", required = true) Integer Id) {
+		var tempCategory = service.get(Id);
+		tempCategory.setName(category.getName());
+		tempCategory.setPicture("/PetStoreBackEnd/src/main/resources/images/blank.png");
+		service.update(tempCategory);
 		return "redirect:/categories";
 	}
 	
 	@GetMapping("/categories/edit/{id}")
 	public String editCategory(@PathVariable(name = "id") Integer id, Model model) {
-		Category category = service.get(id);
+		var category = service.get(id);
 		if(category == null) {
 			return "redirect:/categories";
 		}
 		model.addAttribute("category",category);
 		model.addAttribute("pageTitle","Edit Category(ID: " + id + ")");
-		return "category/category_form";
+		return "category/updateCategory";
 	}
 	
-	@GetMapping("/categories/delete/{id}")
-	public String deleteCategory(@PathVariable(name = "id") Integer id, Model model) {
+	@DeleteMapping("/categories/delete/{id}")
+	public String deleteCategory(@PathVariable(name = "id") Integer id) {
 		service.delete(id);
 		return "redirect:/categories";
 	}
@@ -82,8 +96,8 @@ public class CategoryController {
 			@Param("keyword") String keyword) {
 		Page<Category> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		List<Category> listCategories = page.getContent();
-		long startCount = (pageNum -1) * UserService.UsersPerPage + 1;
-		long endCount = startCount + UserService.UsersPerPage - 1;
+		long startCount = (pageNum -1) * BrandService.BrandsPerPage + 1;
+		long endCount = startCount + BrandService.BrandsPerPage - 1;
 		if(endCount> page.getTotalElements()) {
 			endCount = page.getTotalElements();
 		}

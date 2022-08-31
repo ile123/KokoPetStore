@@ -7,11 +7,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.petstore.common.entity.Customer;
+import com.petstore.common.entity.Product;
 
 @Controller
 public class CustomerController {
@@ -46,12 +51,28 @@ public class CustomerController {
 		}
 		model.addAttribute("customer",customer);
 		model.addAttribute("pageTitle","Edit Customer(ID: " + id + ")");
-		return "customer/customer_form";
+		return "customer/updateCustomer";
 	}
 	
-	@GetMapping("/customers/delete/{id}")
-	public String deleteCustomer(@PathVariable(name = "id") Integer id, Model model) {
+	@DeleteMapping("/customers/delete/{id}")
+	public String deleteUser(@PathVariable(name = "id") Integer id) {
 		service.delete(id);
+		return "redirect:/customers";
+	}
+	//update je visak jer put vec zna da se radi
+	//pasword se minja u zasebnoj stranici(odvoji od updateCostumer)
+	@PutMapping("/customers/update")
+	public String updateUser(@ModelAttribute("customer") Customer customer,@RequestParam(value = "id", required = true) Integer Id) {
+		var tempCustomer = service.get(Id);
+		tempCustomer.setFirstName(customer.getFirstName());
+		tempCustomer.setLastName(customer.getLastName());
+		tempCustomer.setAddress(customer.getAddress());
+		tempCustomer.setCity(customer.getCity());
+		tempCustomer.setCountry(customer.getCountry());
+		tempCustomer.setProvince(customer.getProvince());
+		tempCustomer.setPostalCode(customer.getPostalCode());
+		tempCustomer.setPassword(customer.getPassword());
+		service.update(tempCustomer);
 		return "redirect:/customers";
 	}
 	

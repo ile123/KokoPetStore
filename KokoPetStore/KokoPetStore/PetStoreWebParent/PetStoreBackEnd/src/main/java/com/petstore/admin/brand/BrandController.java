@@ -9,9 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +29,8 @@ public class BrandController {
 	@Autowired
 	private BrandService service;
 	
+	@Autowired BrandRepository repo;
+	
 	@GetMapping("/brands")
 	public String listFirstPage(Model model) {
 		return listByPage(1, model, "name", "asc", null);
@@ -31,7 +38,7 @@ public class BrandController {
 	
 	@GetMapping("/brands/new")
 	public String NewBrand(Model model) {
-		Brand brand = new Brand();
+		var brand = new Brand();
 		model.addAttribute("brand",brand);
 		model.addAttribute("pageTitle","Create New Brand");
 		return "brand/brand_form";
@@ -47,7 +54,7 @@ public class BrandController {
 			brand.setPicture(fileName);
 		}
 		service.save(brand);
-		Brand savedBrand= service.GetAllBrands()
+		var savedBrand= service.GetAllBrands()
 				.stream()
 				.filter(temp -> brand.getName().equals(temp.getName()))
 				.findAny().orElse(null);
@@ -56,19 +63,29 @@ public class BrandController {
 		return "redirect:/brands";
 	}
 	
+	@PutMapping("/brands/update")
+	//@RequestMapping(value = "/brands/update/{id}", method = RequestMethod.PUT)
+	public String updateBrand(@ModelAttribute("brand") Brand brand,@RequestParam(value = "id", required = true) Integer Id) {
+		var tempBrand = service.get(Id);
+		tempBrand.setName(brand.getName());
+		tempBrand.setPicture("/PetStoreBackEnd/src/main/resources/images/blank.png");
+		service.update(tempBrand);
+		return "redirect:/brands";
+	}
+	
 	@GetMapping("/brands/edit/{id}")
 	public String editBrand(@PathVariable(name = "id") Integer id, Model model) {
-		Brand brand = service.get(id);
+		var brand = service.get(id);
 		if(brand == null) {
 			return "redirect:/brands";
 		}
 		model.addAttribute("brand",brand);
 		model.addAttribute("pageTitle","Edit Brand(ID: " + id + ")");
-		return "brand/brand_form";
+		return "brand/updateBrand";
 	}
 	
-	@GetMapping("/brands/delete/{id}")
-	public String deleteBrand(@PathVariable(name = "id") Integer id, Model model) {
+	@DeleteMapping("/brands/delete/{id}")
+	public String deleteBrand(@PathVariable(name = "id") Integer id) {
 		service.delete(id);
 		return "redirect:/brands";
 	}

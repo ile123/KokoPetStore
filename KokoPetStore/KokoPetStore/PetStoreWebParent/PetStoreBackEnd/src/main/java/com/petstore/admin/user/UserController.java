@@ -7,10 +7,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.petstore.common.entity.Category;
 import com.petstore.common.entity.Role;
 import com.petstore.common.entity.User;
 
@@ -51,11 +56,23 @@ public class UserController {
 		model.addAttribute("user",user);
 		model.addAttribute("listRoles",listRoles);
 		model.addAttribute("pageTitle","Edit User(ID: " + id + ")");
-		return "user/user_form";
+		return "user/updateUser";
 	}
 	
-	@GetMapping("/users/delete/{id}")
-	public String deleteUser(@PathVariable(name = "id") Integer id, Model model) {
+	@PutMapping("/users/update")
+	//@RequestMapping(value = "/brands/update/{id}", method = RequestMethod.PUT)
+	public String updateUser(@ModelAttribute("user") User user,@RequestParam(value = "id", required = true) Integer Id) {
+		var tempUser = service.get(Id);
+		tempUser.setFirstName(user.getFirstName());
+		tempUser.setLastName(user.getLastName());
+		tempUser.setPassword(user.getPassword());
+		tempUser.setRole(user.getRole());
+		service.update(tempUser);
+		return "redirect:/users";
+	}
+	
+	@DeleteMapping("/users/delete/{id}")
+	public String deleteUser(@PathVariable(name = "id") Integer id) {
 		service.delete(id);
 		return "redirect:/users";
 	}

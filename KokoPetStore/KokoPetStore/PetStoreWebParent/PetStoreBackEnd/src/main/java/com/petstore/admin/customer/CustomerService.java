@@ -33,56 +33,15 @@ public class CustomerService {
 	}
 	
 	public void save(Customer customer) {
-		boolean customerExists = (customer.getId() != null);
-		if(customerExists) {
-			update(customer);
+		if(!isEmailUnique(customer.getEmail())) {
+			return;
 		}
-		else {
-			if(!isEmailUnique(customer.getEmail())) {
-				return;
-			}
-			encodePassword(customer);
-		}
+		encodePassword(customer);
 		repo.save(customer);
 	}
 	
 	public void update(Customer customer) {
-		if(!isEmailUnique(customer.getEmail())) {
-			return;
-		}
-		Customer existingCustomer = repo.findById(customer.getId()).get();
-		if(customer.getFirstName().isEmpty()) {
-			customer.setFirstName(existingCustomer.getFirstName());
-		}
-		if(customer.getLastName().isEmpty()) {
-			customer.setLastName(existingCustomer.getLastName());
-		}
-		if(customer.getAddress().isEmpty()) {
-			customer.setAddress(existingCustomer.getAddress());
-		}
-		if(customer.getCity().isEmpty()) {
-			customer.setCity(existingCustomer.getCity());
-		}
-		if(customer.getCountry().isEmpty()) {
-			customer.setCountry(existingCustomer.getCountry());
-		}
-		if(customer.getProvince().isEmpty()) {
-			customer.setProvince(existingCustomer.getProvince());
-		}
-		if(customer.getPostalCode().isEmpty()) {
-			customer.setPostalCode(existingCustomer.getPostalCode());
-		}
-		if(customer.getPassword().isEmpty()) {
-			customer.setPassword(existingCustomer.getPassword());
-			encodePassword(customer);
-		} else {
-			encodePassword(customer);
-		}
-		List<CartItem> products = cartRepo.findByCustomer(customer.getId());
-		for (CartItem item : products) {
-			item.setCustomer(customer);
-		}
-		customer.setPurchases(products);
+		encodePassword(customer);
 		repo.save(customer);
 	}
 	
